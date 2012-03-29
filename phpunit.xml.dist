@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<phpunit bootstrap="tests/bootstrap.php">
+    <testsuites>
+        <testsuite name="PBKDF2ServiceProvider Test Suite">
+            <directory suffix=".php">tests/Nrk/PBKDF2/</directory>
+        </testsuite>
+    </testsuites>
+
+    <filter>
+        <whitelist>
+            <directory suffix=".php">lib/Nrk/PBKDF2/</directory>
+        </whitelist>
+    </filter>
+</phpunit>
