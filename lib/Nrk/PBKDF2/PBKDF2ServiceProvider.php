@@ -113,4 +113,8 @@ class PBKDF2ServiceProvider implements ServiceProviderInterface
             return call_user_func_array($app['pbkdf2.function'], $arguments);
         });
     }
+
+    public function boot(Application $app) {
+        
+    }
 }
