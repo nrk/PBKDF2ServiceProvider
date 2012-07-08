@@ -72,8 +72,7 @@ class PBKDF2ServiceProvider implements ServiceProviderInterface
             if (!is_callable($app['pbkdf2.function'])) {
                 throw new \InvalidArgumentException('The value of "pbkdf2.function" must be a valid callable object.');
             }
-        }
-        else {
+        } else {
             $app['pbkdf2.function'] = $app->protect($this->getHashFunction($app));
         }
 
@@ -81,8 +80,7 @@ class PBKDF2ServiceProvider implements ServiceProviderInterface
             if (!in_array($algorithm = $app['pbkdf2.algorithm'], hash_algos())) {
                 throw new \InvalidArgumentException("Unknown hashing algorithm: $algorithm.");
             }
-        }
-        else {
+        } else {
             $app['pbkdf2.algorithm'] = self::ALGORITHM;
         }
 
@@ -94,7 +92,7 @@ class PBKDF2ServiceProvider implements ServiceProviderInterface
             $app['pbkdf2.iterations'] = self::ITERATIONS;
         }
 
-        $app['pbkdf2'] = $app->protect(function($password, $salt = null) use($app) {
+        $app['pbkdf2'] = $app->protect(function ($password, $salt = null) use ($app) {
             if ($salt === null) {
                 if (!isset($app['pbkdf2.salt'])) {
                     throw new \RuntimeException('Please configure a salt string in "pbkdf2.salt" or pass its value as the second argument.');
@@ -114,7 +112,11 @@ class PBKDF2ServiceProvider implements ServiceProviderInterface
         });
     }
 
-    public function boot(Application $app) {
-        
+    /**
+     * {@inheritdoc}
+     */
+    public function boot(Application $app)
+    {
+        // NOOP
     }
 }
