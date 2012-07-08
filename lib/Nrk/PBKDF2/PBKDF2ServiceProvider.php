@@ -68,30 +68,6 @@ class PBKDF2ServiceProvider implements ServiceProviderInterface
      */
     public function register(Application $app)
     {
-        if (isset($app['pbkdf2.function'])) {
-            if (!is_callable($app['pbkdf2.function'])) {
-                throw new \InvalidArgumentException('The value of "pbkdf2.function" must be a valid callable object.');
-            }
-        } else {
-            $app['pbkdf2.function'] = $app->protect($this->getHashFunction($app));
-        }
-
-        if (isset($app['pbkdf2.algorithm'])) {
-            if (!in_array($algorithm = $app['pbkdf2.algorithm'], hash_algos())) {
-                throw new \InvalidArgumentException("Unknown hashing algorithm: $algorithm.");
-            }
-        } else {
-            $app['pbkdf2.algorithm'] = self::ALGORITHM;
-        }
-
-        if (!isset($app['pbkdf2.key_length'])) {
-            $app['pbkdf2.key_length'] = self::KEY_LENGTH;
-        }
-
-        if (!isset($app['pbkdf2.iterations'])) {
-            $app['pbkdf2.iterations'] = self::ITERATIONS;
-        }
-
         $app['pbkdf2'] = $app->protect(function ($password, $salt = null) use ($app) {
             if ($salt === null) {
                 if (!isset($app['pbkdf2.salt'])) {
@@ -117,6 +93,28 @@ class PBKDF2ServiceProvider implements ServiceProviderInterface
      */
     public function boot(Application $app)
     {
-        // NOOP
+        if (isset($app['pbkdf2.function'])) {
+            if (!is_callable($app['pbkdf2.function'])) {
+                throw new \InvalidArgumentException('The value of "pbkdf2.function" must be a valid callable object.');
+            }
+        } else {
+            $app['pbkdf2.function'] = $app->protect($this->getHashFunction($app));
+        }
+
+        if (isset($app['pbkdf2.algorithm'])) {
+            if (!in_array($algorithm = $app['pbkdf2.algorithm'], hash_algos())) {
+                throw new \InvalidArgumentException("Unknown hashing algorithm: $algorithm.");
+            }
+        } else {
+            $app['pbkdf2.algorithm'] = self::ALGORITHM;
+        }
+
+        if (!isset($app['pbkdf2.key_length'])) {
+            $app['pbkdf2.key_length'] = self::KEY_LENGTH;
+        }
+
+        if (!isset($app['pbkdf2.iterations'])) {
+            $app['pbkdf2.iterations'] = self::ITERATIONS;
+        }
     }
 }

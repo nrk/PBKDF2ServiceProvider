@@ -28,6 +28,7 @@ class PBKDF2ServiceProviderTest extends \PHPUnit_Framework_TestCase
     {
         $app = new Application();
         $app->register(new PBKDF2(), $providerConfiguration);
+        $app->boot();
 
         return $app;
     }
